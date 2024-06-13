@@ -1,13 +1,28 @@
 :root {
+  --background-color: #F0F0F0;
+  --color-darker-green: #97DBAE;
+  --color-ligher-green: #C3E5AE;
+  --color-yellow: #F1E1A6;
+  --color-peach: #F4BBBB;
+  --text-color: #000;
+  
+  --background-color-dark-mode: #5E5E5E;
+  --color-darker-green-dark-mode: #4c7058;
+  --color-lighter-green-dark-mode: #9cb88c;
+  --color-yellow-dark-mode: #baab75;
+  --color-peach-dark-mode: #b88d8d;
+  --text-color-dark-mode: #b6b6b6;
+
+}
+
+:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #d1b5b5;
-
-
+  background-color: var(--background-color);
 }
 
 #app {
@@ -19,8 +34,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #b6b6b6;
-    background-color: #363636;
+    color: var(--text-color-dark-mode);
+    background-color: var(--background-color-dark-mode);
   }
   a:hover {
     color: #b3b5d8;
