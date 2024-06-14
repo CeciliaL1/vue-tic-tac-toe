@@ -1,28 +1,58 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { IPlayer } from '../models/Player' 
 import ButtonCompenent from './ButtonComponent.vue'
 import ChooseGamePiece from './ChooseGamePiece.vue'
+import ChooseAvatar from './ChooseAvatar.vue'
 
-let playerName = ref('')
- 
-const handleSubmit = () => {
-    if(playerName.value === '') return
-    emit('startGame', playerName.value)
-    playerName.value = ''
+let playerName = ref('');
+let gamePiece = ref('');
+let avatar = ref('');
+
+
+const handlePiece = (piece: string) => {
+    gamePiece.value = piece;
+   
 }
 
+const handleAvatar = (animal:string) => {
+    avatar.value = animal;
+}
+
+const handleSubmit = () => {
+    if(playerName.value === '') {
+       return 
+    }
+    
+    const player = {
+        name: playerName.value,
+        gamePiece: gamePiece.value,
+        avatar: avatar.value
+    };
+    emit('startGame', player);
+    playerName.value = '';
+   
+};
+
 const emit = defineEmits<{
-    (e: 'startGame', playerName:string):void
+    (e: 'startGame', player: IPlayer):void
 }>();
 
 </script>
 
 <template>
     <form @submit.prevent="handleSubmit">
-        <h4>Players name</h4>
-        <input type="text" v-model="playerName">
-        <ChooseGamePiece />
+        <div class="form-left">
+            <h4>Players name</h4>
+            <input type="text" v-model="playerName">
+            <ChooseGamePiece @game-piece="handlePiece"/>
+        </div>
+       <div class="form-right">
+        <ChooseAvatar @chose-avatar="handleAvatar" />
+       </div>
+        
         <ButtonCompenent buttonText="Start game" buttonEvent="startGame"/>
+      
     </form>
 </template>
 
@@ -30,8 +60,15 @@ const emit = defineEmits<{
 
 form {
     font-family: 'Yatra One';
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
 }
 form h4 {
     margin: 2px;
 }
+form p {
+    color: var(--error-message-color);
+}
+
 </style>
