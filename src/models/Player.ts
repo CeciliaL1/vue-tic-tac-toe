@@ -1,4 +1,4 @@
-export interface Iplayer {
+export interface IPlayer {
     name: string;
     gamePiece: string;
     avatar: string;
