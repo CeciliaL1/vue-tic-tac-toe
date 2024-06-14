@@ -1,7 +1,7 @@
 :root {
   --background-color: #F0F0F0;
   --color-darker-green: #97DBAE;
-  --color-ligher-green: # ;
+  --color-ligher-green: #bed4c6;
   --color-yellow: #F1E1A6;
   --color-peach: #F4BBBB;
   --text-color: #000;
@@ -13,7 +13,7 @@
   --color-peach-dark-mode: #b88d8d;
   --text-color-dark-mode: #b6b6b6;
 
-  --hover-color: #779882;
+ 
 }
 
 :root {
@@ -31,6 +31,9 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 @media (prefers-color-scheme: dark) {

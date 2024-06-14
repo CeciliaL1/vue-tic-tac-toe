@@ -7,9 +7,11 @@ import { ref } from 'vue'
 let players: IPlayer[] = [];
 let enableGame = ref('enableGame');
 
+const storedPlayers:IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}')
+
 const init = () => {
-    localStorage.clear()
-    const storedPlayers:IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}')
+    //localStorage.clear()
+    
     if(storedPlayers.length === 2) {
         //start Game
         enableGame.value = '';
@@ -33,6 +35,7 @@ const startGame = (player: IPlayer) => {
 
 
 init()
+
 </script>
 
 <template>
