@@ -20,8 +20,8 @@ let pieceClass = ref('');
     <div class="game-piece-container">
         <h4>Choose game piece</h4>
         <div class="game-piece-options">
-            <div class="game-piece" :class="pieceClass === 'X' ? 'picked-piece': ''" @click="handleClick('X')"><i class="fa-solid fa-x"></i></div>
-            <div class="game-piece" :class="pieceClass === 'O' ? 'picked-piece': ''" @click="handleClick('O')"><i class="fa-solid fa-o"></i></div>
+            <div class="game-piece" :class="pieceClass === '1' ? 'picked-piece': ''" @click="handleClick('1')"><i class="fa-solid fa-x"></i></div>
+            <div class="game-piece" :class="pieceClass === '2' ? 'picked-piece': ''" @click="handleClick('2')"><i class="fa-solid fa-o"></i></div>
         </div>
     </div>
 </template>

@@ -24,10 +24,12 @@ const handleSubmit = () => {
        return 
     }
     
-    const player = {
+    const player: IPlayer = {
         name: playerName.value,
         gamePiece: gamePiece.value,
-        avatar: avatar.value
+        avatar: avatar.value,
+        score: 0,
+        count: 0
     };
     emit('startGame', player);
     playerName.value = '';

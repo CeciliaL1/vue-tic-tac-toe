@@ -4,41 +4,62 @@ import type { IPlayer } from '../models/Player'
 
 //spara gameboard i localstorage , checkBoard på localstorage istället
 const gameBoard = [0,0,0, 0,0,0, 0,0,0];
+localStorage.setItem('gameBoard', JSON.stringify(gameBoard))
 
-const storedPlayers:IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}')
+const storedPlayers:IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}');
 
+/*
 onMounted(() => {
+    const shuffledArray = storedPlayers.sort(() => Math.random() - 0.5)
     const checkBoard = (gameBoard.find((item) => item > 0)  || '')
     console.log(checkBoard)
   
     if ( checkBoard === 1 ) {
         return
     } else {
-        const shuffledArray = storedPlayers.sort(() => Math.random() - 0.5)
+        
         startingPlayer.value = shuffledArray[0].name
-        startingPlayerGamePiece.value = shuffledArray[0].gamePiece
-  
+        startingPlayerGamePiece.value = shuffledArray[0].gamePiece;
     }
     
 });
+*/
 
+const handleClick = (e: Event,) => {
+    
+    const storedGameBoard = JSON.parse(localStorage.getItem('gameBoard') || '');
 
-const handleClick = (e: Event) => {
-    console.log(e)
+    if(storedPlayers[0].count === storedPlayers[1].count){
+        console.log('öka')
+        storedPlayers[0].count ++;
+        activePlayer.value = storedPlayers[0].name
+        activePlayerGamePiece.value = storedPlayers[0].gamePiece;
+    } else {
+        storedPlayers[1].count ++;
+        activePlayer.value = storedPlayers[1].name
+        activePlayerGamePiece.value = storedPlayers[1].gamePiece;
+    }
+   
+    console.log(storedPlayers)
+    localStorage.setItem('players', JSON.stringify(storedPlayers))
+    const target = e.target as HTMLDivElement || ''
+ 
 }
 
 
-let startingPlayer = ref('')
-let startingPlayerGamePiece = ref('')
+let activePlayer = ref(storedPlayers[0].name)
+let activePlayerGamePiece = ref(storedPlayers[0].gamePiece)
+let clickedSquare = ref(false)
  
 
 </script>
 
 
 <template>
-    <p>Player starting is {{ startingPlayer }} {{ startingPlayerGamePiece }}</p>
-<div class="game-board">
-<div class="square"  v-for="square in gameBoard" @click="handleClick">
+    <p>Players turn {{ activePlayer }} {{ activePlayerGamePiece }}</p>
+<div class="game-board"> 
+<div class="square" v-for="square in gameBoard" @click="handleClick">
+    <p v-if="clickedSquare">X</p>
 </div>
 </div>
 
@@ -64,6 +85,9 @@ let startingPlayerGamePiece = ref('')
     border: 1px solid black;
     cursor: pointer;
     background-color: #f8f8f8
+}
+.square .clicked {
+    background-color: aqua;
 }
 .square:hover {
     background-color: var(--color-yellow);
