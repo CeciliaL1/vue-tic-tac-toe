@@ -2,73 +2,46 @@
 import { onMounted, ref } from 'vue';
 import type { IPlayer } from '../models/Player'
 
-//spara gameboard i localstorage , checkBoard på localstorage istället
-const gameBoard = [0,0,0, 0,0,0, 0,0,0];
-localStorage.setItem('gameBoard', JSON.stringify(gameBoard))
+const storedPlayers= ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
+const storedGameBoard = JSON.parse(localStorage.getItem('gameBoard') || '');
 
-const storedPlayers:IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}');
 
-/*
-onMounted(() => {
-    const shuffledArray = storedPlayers.sort(() => Math.random() - 0.5)
-    const checkBoard = (gameBoard.find((item) => item > 0)  || '')
-    console.log(checkBoard)
-  
-    if ( checkBoard === 1 ) {
-        return
-    } else {
+
+const handleClick = (i:number) => {
+    
+    if(storedPlayers.value[0].count === storedPlayers.value[1].count){
+        storedPlayers.value[0].count ++;
+        storedGameBoard[i] = storedPlayers.value[0].gamePiece;
         
-        startingPlayer.value = shuffledArray[0].name
-        startingPlayerGamePiece.value = shuffledArray[0].gamePiece;
-    }
-    
-});
-*/
-
-const handleClick = (e: Event,) => {
-    
-    const storedGameBoard = JSON.parse(localStorage.getItem('gameBoard') || '');
-
-    if(storedPlayers[0].count === storedPlayers[1].count){
-        console.log('öka')
-        storedPlayers[0].count ++;
-        activePlayer.value = storedPlayers[0].name
-        activePlayerGamePiece.value = storedPlayers[0].gamePiece;
     } else {
-        storedPlayers[1].count ++;
-        activePlayer.value = storedPlayers[1].name
-        activePlayerGamePiece.value = storedPlayers[1].gamePiece;
+        storedPlayers.value[1].count ++;
+        storedGameBoard[i] = storedPlayers.value[1].gamePiece;
     }
-   
-    console.log(storedPlayers)
-    localStorage.setItem('players', JSON.stringify(storedPlayers))
-    const target = e.target as HTMLDivElement || ''
+
  
+    localStorage.setItem('players', JSON.stringify(storedPlayers.value));
+    localStorage.setItem('gameBoard', JSON.stringify(storedGameBoard));
 }
-
-
-let activePlayer = ref(storedPlayers[0].name)
-let activePlayerGamePiece = ref(storedPlayers[0].gamePiece)
-let clickedSquare = ref(false)
- 
 
 </script>
 
-
 <template>
-    <p>Players turn {{ activePlayer }} {{ activePlayerGamePiece }}</p>
-<div class="game-board"> 
-<div class="square" v-for="square in gameBoard" @click="handleClick">
-    <p v-if="clickedSquare">X</p>
-</div>
-</div>
-
-<div class="players-presentation">
+    <div class="players-presentation">
     <div v-for="player in storedPlayers">
         <p>{{ player.name }} {{ player.gamePiece }}</p>
         <img :src="player.avatar" alt="">
     </div>
 </div>
+    <p v-if="storedPlayers[0].count === storedPlayers[1].count">Players turn {{ storedPlayers[0].name }} {{ storedPlayers[0].gamePiece }}</p>
+    <p v-if="storedPlayers[0].count > storedPlayers[1].count">Players turn {{ storedPlayers[1].name }} {{ storedPlayers[1].gamePiece }}</p>
+<div class="game-board"> 
+<div class="square"  v-for="(square , i) in storedGameBoard" :key="i"  @click="handleClick(i)" >
+    <p v-if="storedGameBoard[i] === 'X'">X</p>
+    <p v-if="storedGameBoard[i] === 'O'">O</p>
+</div>
+</div>
+
+
 </template>
 
 <style scoped>

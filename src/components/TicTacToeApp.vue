@@ -2,23 +2,29 @@
 import GameBoard from '../components/GameBoard.vue'
 import InputPlayer from './InputPlayer.vue'
 import type { IPlayer } from '../models/Player'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 let players: IPlayer[] = [];
 let enableGame = ref('enableGame');
 
+
 const storedPlayers:IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}')
 
-const init = () => {
-    //localStorage.clear()
-    
+onMounted(() => {
+        
     if(storedPlayers.length === 2) {
         //start Game
         enableGame.value = '';
     }
-}
+})
+    //localStorage.clear()
+
+
 
 const startGame = (player: IPlayer) => {
+    const gameBoard = [0,0,0 ,0,0,0 ,0,0,0];
+
+    localStorage.setItem('gameBoard', JSON.stringify(gameBoard));
 
     console.log('starta spel', player)
     players.push(player)
@@ -34,7 +40,6 @@ const startGame = (player: IPlayer) => {
 }
 
 
-init()
 
 </script>
 

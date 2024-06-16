@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
+
+interface IGamePieces {
+    chosenPiece: string
+}
+const gamePieces = ref<IGamePieces[]>([]);
 
 const handleClick = (piece: string) => {
     emit('gamePiece', piece)
-    pieceClass.value = piece;
+    gamePieces.value.push({chosenPiece: piece});
+    console.log(gamePieces)
     
 };
 
@@ -12,16 +18,14 @@ const emit = defineEmits<{
     (e: 'gamePiece', piece: string):void;
 }>();
 
-let pieceClass = ref('');
-
 </script>
 
 <template>
     <div class="game-piece-container">
         <h4>Choose game piece</h4>
         <div class="game-piece-options">
-            <div class="game-piece" :class="pieceClass === '1' ? 'picked-piece': ''" @click="handleClick('1')"><i class="fa-solid fa-x"></i></div>
-            <div class="game-piece" :class="pieceClass === '2' ? 'picked-piece': ''" @click="handleClick('2')"><i class="fa-solid fa-o"></i></div>
+            <div class="game-piece" :class="gamePieces.find((piece) => piece.chosenPiece === 'X') ? 'picked-piece': ''" @click="handleClick('X')"><i class="fa-solid fa-x"></i></div>
+            <div class="game-piece" :class="gamePieces.find((piece) => piece.chosenPiece === 'O') ? 'picked-piece': ''" @click="handleClick('O')"><i class="fa-solid fa-o"></i></div>
         </div>
     </div>
 </template>
