@@ -5,12 +5,12 @@ const avatars:string[] = ['/src/assets/Avatars/elephant.svg', '/src/assets/Avata
 
 const handleClick = (animal:string, e: Event ) => {
 emit('choseAvatar', animal);
-colorBackground(e)
+colorBackground(e);
 };
 
 const colorBackground = (e:Event) => {
-const event = (e.target as Element)
-event.classList.add('chosen-avatar')
+const event = (e.target as Element);
+event.classList.add('chosen-avatar');
 }
 
 const emit = defineEmits<{

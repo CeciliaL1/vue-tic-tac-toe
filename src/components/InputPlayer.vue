@@ -11,16 +11,16 @@ let avatar = ref('');
 
 const handlePiece = (piece: number) => {
     gamePiece.value = piece;
-}
+};
 
 const handleAvatar = (animal:string) => {
     avatar.value = animal;
-}
+};
 
 const handleSubmit = () => {
     if(playerName.value === '' || gamePiece.value === 0 ) {
        return;
-    }
+    };
     
     const player: IPlayer = {
         name: playerName.value,

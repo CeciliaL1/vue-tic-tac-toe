@@ -14,21 +14,9 @@ const gameBoard = [
     [0,0,0],
     [0,0,0],
     [0,0,0]
-]
-   
-const getStoredWinner = () => {
-    const storedData = localStorage.getItem('winner');
-    if(!storedData) {
-    return [];
-}
-try {
-    return JSON.parse(storedData) as IPlayer[];
-  } catch (error) {
-    return [];
-  }
-}
+];
 
-const  init =() => {
+const init =() => {
     const storedWinner = ref<IPlayer[]>(getStoredWinner())
         console.log(storedWinner.value)
         if(storedPlayers.value.length === 2) {
@@ -39,36 +27,47 @@ const  init =() => {
             enableGame.value = 'isAWinner'
             winner.value = toRaw(storedWinner.value)
         }
-    }
+};
 
-    //localStorage.clear()
+const getStoredWinner = () => {
+    const storedData = localStorage.getItem('winner');
+    if(!storedData) {
+    return [];
+};
+
+try {
+    return JSON.parse(storedData) as IPlayer[];
+  } catch (error) {
+    return [];
+  }
+};
 
 const startGame = (player: IPlayer) => {
- 
     localStorage.setItem('gameBoard', JSON.stringify(gameBoard));
 
     players.push(player)
     localStorage.setItem('players', JSON.stringify(players));
 
-    const storedPlayers: IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}')
-    console.log('checka', storedPlayers.length)
+    const storedPlayers: IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}');
     if(storedPlayers.length === 2) {
         setTimeout(() => {
             enableGame.value = ''
         },1000);
-    }
-}
+    };
+};
 
-init()
+init();
+
 const checkValues = (didSomeOneWin: boolean, winnerValue: IPlayer[]| undefined) => {
     if(didSomeOneWin) {
-        enableGame.value = 'isAWinner'
-        winner.value = winnerValue
-        localStorage.removeItem('gameBoard')
-    }
-}
+        enableGame.value = 'isAWinner';
+        winner.value = winnerValue;
+        localStorage.removeItem('gameBoard');
+    };
+};
+
 const playAgain = () =>{
-    localStorage.removeItem('winner')
+    localStorage.removeItem('winner');
     localStorage.setItem('gameBoard', JSON.stringify(gameBoard));
     enableGame.value = '';
 };

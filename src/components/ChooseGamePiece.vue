@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-
 interface IGamePieces {
-    chosenPiece: number
+    chosenPiece: number;
 }
 const gamePieces = ref<IGamePieces[]>([]);
 
 const handleClick = (piece: number) => {
-    emit('gamePiece', piece)
+    emit('gamePiece', piece);
     gamePieces.value.push({chosenPiece: piece});
-
-    
 };
 
 const emit = defineEmits<{
