@@ -9,7 +9,6 @@ let playerName = ref('');
 let gamePiece = ref( );
 let avatar = ref('');
 
-
 const handlePiece = (piece: number) => {
     gamePiece.value = piece;
    
@@ -20,6 +19,7 @@ const handleAvatar = (animal:string) => {
 }
 
 const handleSubmit = () => {
+
     if(playerName.value === '') {
        return 
     }
@@ -72,5 +72,21 @@ form h4 {
 form p {
     color: var(--error-message-color);
 }
+form input {
+    height: 40px;
+    width: 300px;
+    border-radius: 10px;
+    background-color: var(--color-peach);
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    outline: none;
+}
+form input:hover {
+    background-color: var(--color-ligher-green);
+    opacity: 70%;
+}
+
 
 </style>

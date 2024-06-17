@@ -32,6 +32,9 @@ img {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       
     padding: 10px;
-    border-radius: 10px
-;}
+    border-radius: 10px;
+}
+img:hover{
+    background-color: var(--color-peach);
+}
 </style>

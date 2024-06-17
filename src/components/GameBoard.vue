@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import type { IPlayer } from '../models/Player'
 
+
 const storedPlayers= ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
 const storedGameBoard = ref(JSON.parse(localStorage.getItem('gameBoard') || ''));
 

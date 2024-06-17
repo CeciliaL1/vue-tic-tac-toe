@@ -2,7 +2,7 @@
 import GameBoard from '../components/GameBoard.vue'
 import InputPlayer from './InputPlayer.vue'
 import type { IPlayer } from '../models/Player'
-import {  onMounted, ref } from 'vue'
+import {  ref, toRaw } from 'vue'
 import DisplayWinner from './DisplayWinner.vue'
 
 let players: IPlayer[] = [];
@@ -11,7 +11,7 @@ let winner = ref<IPlayer[]>()
 
 
 const storedPlayers = ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
-const storedWinner = ref<IPlayer[]>(JSON.parse(localStorage.getItem('winner') || '{}'))
+
 
     const gameBoard = [
         [0,0,0],
@@ -19,17 +19,31 @@ const storedWinner = ref<IPlayer[]>(JSON.parse(localStorage.getItem('winner') ||
         [0,0,0]
     ]
    
+const getStoredWinner = () => {
+    const storedData = localStorage.getItem('winner');
+    if(!storedData) {
+    return [];
+}
+try {
+    return JSON.parse(storedData) as IPlayer[];
+  } catch (error) {
+    return [];
+  }
+}
 
 const  init =() => {
-    
+    const storedWinner = ref<IPlayer[]>(getStoredWinner())
+        console.log(storedWinner.value)
         if(storedPlayers.value.length === 2) {
             localStorage.setItem('gameBoard', JSON.stringify(gameBoard));
             //start Game
             enableGame.value = '';
         }
-
+    
         if(storedWinner.value.length === 1) {
             enableGame.value = 'isAWinner'
+            winner.value = toRaw(storedWinner.value)
+            
         }
 
     }
@@ -39,7 +53,7 @@ const  init =() => {
 const startGame = (player: IPlayer) => {
  
     localStorage.setItem('gameBoard', JSON.stringify(gameBoard));
-    console.log('starta spel', player)
+
     players.push(player)
     localStorage.setItem('players', JSON.stringify(players));
 
@@ -70,10 +84,9 @@ const playAgain = () =>{
   
 };
 const newGame = () => {
-    localStorage.removeItem('players')
-    localStorage.removeItem('winner')
-    localStorage.removeItem('gameBoard')
-    enableGame.value = 'enableGame';
+ localStorage.clear();
+ players = [];
+enableGame.value = 'enableGame';
 }
 
 </script>
@@ -84,10 +97,10 @@ const newGame = () => {
 </div>
 
 <div class="content" v-if="enableGame === 'enableGame'">
-    <InputPlayer  @start-game="startGame"/> 
+    <InputPlayer  @start-game="startGame" :player="storedPlayers"/> 
 </div>
 <div class="content"  v-if="enableGame === '' ">
-    <GameBoard @check-values="checkValues" />
+    <GameBoard @check-values="checkValues"/>
 </div>
 
 
