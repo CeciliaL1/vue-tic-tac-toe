@@ -1,21 +1,52 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Xnjua3bd)
-# Inlämningsuppgift Tre-i-rad
 
-Denna mall innehåller ett tomt vue-projekt baserat på typescript. Er uppgift är att skapa spelet tre-i-rad med hjälp av denna mall. Eftersom ni inte har någonting att utgå ifrån så har ni fria händer att skapa just er unika lösning.
+# Tic Tac Toe
 
-## Betyg G
+## Demolink
 
-- Kunna ange spelarnamn för X respektive O
-- Kunna spela ett spel och få en vinnare/oavgjort
-- Inte kunna göra fler drag efter spelet är slut
-- Kunna starta ett nytt spel
-- Använda minst en komponent
 
-## Betyg VG
 
-- Använda minst tre komponenter för er lösning
-- Spara poänghistorik för spelarna
-- Kunna visa poängstatistiken
-- Kunna stänga webbläsaren och komma tillbaka där spelet avbröts
-- Kunna nollställa statistik och börja om med nya spelare
+# Application requirements
+
+A Tic Tac Toe game using vue.js and TypeScript
+
+- Use atLeat three components for tour solution
+- Save point history for players.
+- Be able to display point statistics.
+- Allow users to close the browser and resume where the game was interrupted.
+- Provide the ability to reset statistics and start over with new players.
+
+
+# The following should happen
+
+A traditional tic-tac-toe game where you can choose from six different avatars. 
+
+## Authors
+- [@CeciliaL1](https://github.com/CeciliaL1)
+
+## Project built with
+
+![Vue](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
+![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+
+
+## Initial Wireframes
+
+
+
+## Final result
+
+
+
+
+## Start project
+
+```
+npm install
+```
+
+## Lessons learned
+
+I have learned to use Vue.js with props, emits, and creating components.
 
