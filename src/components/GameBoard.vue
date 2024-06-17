@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
 import type { IPlayer } from '../models/Player'
 
 
@@ -26,53 +26,58 @@ const emit = defineEmits<{
 }>();
 
 const handleClick = (i:number, j:number) => {
-
-    if( storedGameBoard.value[i][j] === 0 ) {
+    
+    if(storedGameBoard.value[i][j] === 0 ) {
+        
     if(storedPlayers.value[0].count === storedPlayers.value[1].count){
         storedPlayers.value[0].count ++;
         storedGameBoard.value[i][j] = storedPlayers.value[0].gamePiece;
-
-        const checkedWinner = checkWinner();
-        if(checkedWinner){
-            didSomeOneWin.value = true
-            winner.value = [storedPlayers.value[0]]
-            storedPlayers.value[0].score ++; 
-        }
-    } else {
+        checkBoardResult(storedPlayers.value[0])
+    } else  if (storedPlayers.value[0].count > storedPlayers.value[1].count){
         storedPlayers.value[1].count ++;
         storedGameBoard.value[i][j] = storedPlayers.value[1].gamePiece;
-
-        const checkedWinner = checkWinner();
-        if(checkedWinner){
-            didSomeOneWin.value = true;
-            winner.value = [storedPlayers.value[1]]
-            storedPlayers.value[1].score ++; 
-        }
-  
+        checkBoardResult(storedPlayers.value[1])
     }
     localStorage.setItem('winner', JSON.stringify(winner.value));
     localStorage.setItem('players', JSON.stringify(storedPlayers.value));
     localStorage.setItem('gameBoard', JSON.stringify(storedGameBoard.value));
     emit('checkValues', didSomeOneWin.value, winner.value)
+    
     }else {
-        return;
+        return
     }
+   
 
 }
+const checkBoardResult = (player:IPlayer) => {
+    const checkedWinner = checkWinner();
+    const array = toRaw(storedGameBoard.value)
 
+
+        if(checkedWinner){
+            didSomeOneWin.value = true
+            winner.value = [player]
+            storedPlayers.value[0].score ++; 
+        } else if (!checkedWinner && !array[0].includes(0) && !array[1].includes(0) && !array[2].includes(0)) {
+            didSomeOneWin.value = true;
+            winner.value = [{name:'Tied game', gamePiece: 0, avatar: 'src/assets/Avatars/tie-svgrepo-com.svg', count:0, score:0}]
+        }
+}
 const checkWinner = () => {
     for (const combination of winningOptions.value) {
         const [a, b, c] = combination;
-        if (
-          storedGameBoard.value[a[0]][a[1]] &&
-          storedGameBoard.value[a[0]][a[1]] === storedGameBoard.value[b[0]][b[1]] &&
-          storedGameBoard.value[a[0]][a[1]] === storedGameBoard.value[c[0]][c[1]]
+
+  
+        if (storedGameBoard.value[a[0]][a[1]] &&
+            storedGameBoard.value[a[0]][a[1]] === storedGameBoard.value[b[0]][b[1]] &&
+            storedGameBoard.value[a[0]][a[1]] === storedGameBoard.value[c[0]][c[1]]
         ) {
-          return true;
+            return true;
         }
-      }
-      return false;
+    }
+    return false;
 }
+
 </script>
 
 <template>

@@ -18,3 +18,4 @@ Denna mall innehåller ett tomt vue-projekt baserat på typescript. Er uppgift �
 - Kunna visa poängstatistiken
 - Kunna stänga webbläsaren och komma tillbaka där spelet avbröts
 - Kunna nollställa statistik och börja om med nya spelare
+
