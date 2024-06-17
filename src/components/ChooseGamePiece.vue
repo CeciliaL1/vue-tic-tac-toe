@@ -10,7 +10,7 @@ const gamePieces = ref<IGamePieces[]>([]);
 const handleClick = (piece: number) => {
     emit('gamePiece', piece)
     gamePieces.value.push({chosenPiece: piece});
-    console.log(gamePieces)
+
     
 };
 

@@ -9,15 +9,12 @@ let players: IPlayer[] = [];
 let enableGame = ref('enableGame');
 let winner = ref<IPlayer[]>()
 
-
 const storedPlayers = ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
-
-
-    const gameBoard = [
-        [0,0,0],
-        [0,0,0],
-        [0,0,0]
-    ]
+const gameBoard = [
+    [0,0,0],
+    [0,0,0],
+    [0,0,0]
+]
    
 const getStoredWinner = () => {
     const storedData = localStorage.getItem('winner');
@@ -35,17 +32,13 @@ const  init =() => {
     const storedWinner = ref<IPlayer[]>(getStoredWinner())
         console.log(storedWinner.value)
         if(storedPlayers.value.length === 2) {
-            localStorage.setItem('gameBoard', JSON.stringify(gameBoard));
-            //start Game
             enableGame.value = '';
         }
     
         if(storedWinner.value.length === 1) {
             enableGame.value = 'isAWinner'
             winner.value = toRaw(storedWinner.value)
-            
         }
-
     }
 
     //localStorage.clear()
@@ -62,33 +55,28 @@ const startGame = (player: IPlayer) => {
     if(storedPlayers.length === 2) {
         setTimeout(() => {
             enableGame.value = ''
-        },2000);
+        },1000);
     }
 }
 
 init()
 const checkValues = (didSomeOneWin: boolean, winnerValue: IPlayer[]| undefined) => {
-if(didSomeOneWin) {
-    enableGame.value = 'isAWinner'
-    winner.value = winnerValue
-    localStorage.removeItem('gameBoard')
-}
+    if(didSomeOneWin) {
+        enableGame.value = 'isAWinner'
+        winner.value = winnerValue
+        localStorage.removeItem('gameBoard')
+    }
 }
 const playAgain = () =>{
     localStorage.removeItem('winner')
     localStorage.setItem('gameBoard', JSON.stringify(gameBoard));
-    
-
     enableGame.value = '';
-
-  
 };
 const newGame = () => {
- localStorage.clear();
- players = [];
-enableGame.value = 'enableGame';
+    localStorage.clear();
+    players = [];
+    enableGame.value = 'enableGame';
 }
-
 </script>
 
 <template>
@@ -102,8 +90,6 @@ enableGame.value = 'enableGame';
 <div class="content"  v-if="enableGame === '' ">
     <GameBoard @check-values="checkValues"/>
 </div>
-
-
 </template>
 
 <style scoped>
@@ -111,5 +97,4 @@ enableGame.value = 'enableGame';
     position: absolute;
     top: 150px;
 }
-
 </style>

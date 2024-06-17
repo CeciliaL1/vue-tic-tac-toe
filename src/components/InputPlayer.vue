@@ -6,12 +6,11 @@ import ChooseGamePiece from './ChooseGamePiece.vue'
 import ChooseAvatar from './ChooseAvatar.vue'
 
 let playerName = ref('');
-let gamePiece = ref( );
+let gamePiece = ref(0);
 let avatar = ref('');
 
 const handlePiece = (piece: number) => {
     gamePiece.value = piece;
-   
 }
 
 const handleAvatar = (animal:string) => {
@@ -19,9 +18,8 @@ const handleAvatar = (animal:string) => {
 }
 
 const handleSubmit = () => {
-
-    if(playerName.value === '') {
-       return 
+    if(playerName.value === '' || gamePiece.value === 0 ) {
+       return;
     }
     
     const player: IPlayer = {
@@ -33,7 +31,6 @@ const handleSubmit = () => {
     };
     emit('startGame', player);
     playerName.value = '';
-   
 };
 
 const emit = defineEmits<{
@@ -63,7 +60,7 @@ const emit = defineEmits<{
 form {
     font-family: 'Yatra One';
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(1, 1fr); 
     gap: 20px;
 }
 form h4 {

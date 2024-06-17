@@ -91,8 +91,8 @@ const checkWinner = () => {
  
 <div class="game-board" v-for="(square, i) in storedGameBoard" >
 <div class="square" v-for="(sq , j) in square" :key="j" @click="handleClick(i, j)">
-    <p v-if="storedGameBoard[i][j] === 1">X</p>
-    <p v-if="storedGameBoard[i][j] === 2">O</p>
+    <p class="game-piece" v-if="storedGameBoard[i][j] === 1">X</p>
+    <p class="game-piece" v-if="storedGameBoard[i][j] === 2">O</p>
 </div>
 
 </div>
@@ -146,6 +146,11 @@ const checkWinner = () => {
 .players-presentation img {
     width: 40px;
     height: auto;
+}
+.game-piece{
+    margin-top: 15px;
+    font-family: 'Yatra One';
+    font-size: 3rem;
 }
 
 </style>

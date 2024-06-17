@@ -1,10 +1,17 @@
 <script setup lang="ts">
 
-const avatars =['/src/assets/Avatars/elephant.svg', '/src/assets/Avatars/giraffe.svg', '/src/assets/Avatars/gorilla.svg', '/src/assets/Avatars/pinguin.svg', '/src/assets/Avatars/rhino.svg', '/src/assets/Avatars/tiger.svg'];
+const avatars:string[] = ['/src/assets/Avatars/elephant.svg', '/src/assets/Avatars/giraffe.svg', '/src/assets/Avatars/gorilla.svg', '/src/assets/Avatars/pinguin.svg', '/src/assets/Avatars/rhino.svg', '/src/assets/Avatars/tiger.svg'];
 
-const handleClick = (animal:string) => {
+
+const handleClick = (animal:string, e: Event ) => {
 emit('choseAvatar', animal);
+colorBackground(e)
 };
+
+const colorBackground = (e:Event) => {
+const event = (e.target as Element)
+event.classList.add('chosen-avatar')
+}
 
 const emit = defineEmits<{
     (e: 'choseAvatar', animal:string):void
@@ -14,7 +21,8 @@ const emit = defineEmits<{
 <template>
     <h4>Choose an avatar</h4>
 <div class="avatar-container" >
-    <img v-for="animal in avatars" :src="animal" alt="" @click="handleClick(animal)">
+    <img v-for="(animal, i) in avatars" :src="animal" alt="" :key="i" @click="handleClick(animal, $event)">
+  
 </div>
 </template>
 
@@ -34,7 +42,12 @@ img {
     padding: 10px;
     border-radius: 10px;
 }
+
 img:hover{
     background-color: var(--color-peach);
 }
+img.chosen-avatar {
+    background-color: var(--color-yellow);
+}
+
 </style>
