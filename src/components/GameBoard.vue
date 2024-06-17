@@ -26,7 +26,8 @@ const emit = defineEmits<{
 }>();
 
 const handleClick = (i:number, j:number) => {
-    
+    console.log('0', storedPlayers.value[0])
+    console.log('1', storedPlayers.value[1])
     if(storedGameBoard.value[i][j] === 0 ) {
         
     if(storedPlayers.value[0].count === storedPlayers.value[1].count){
@@ -34,7 +35,7 @@ const handleClick = (i:number, j:number) => {
         storedGameBoard.value[i][j] = storedPlayers.value[0].gamePiece;
         checkBoardResult(storedPlayers.value[0]);
 
-    } else  if (storedPlayers.value[0].count > storedPlayers.value[1].count){
+    } else {
         storedPlayers.value[1].count ++;
         storedGameBoard.value[i][j] = storedPlayers.value[1].gamePiece;
         checkBoardResult(storedPlayers.value[1]);
@@ -58,7 +59,7 @@ const checkBoardResult = (player:IPlayer) => {
     if(checkedWinner){
         didSomeOneWin.value = true;
         winner.value = [player];
-        storedPlayers.value[0].score ++; 
+       player.score ++; 
 
     } else if (!checkedWinner && !array[0].includes(0) && !array[1].includes(0) && !array[2].includes(0)) {
         didSomeOneWin.value = true;
