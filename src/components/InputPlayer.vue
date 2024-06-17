@@ -6,11 +6,11 @@ import ChooseGamePiece from './ChooseGamePiece.vue'
 import ChooseAvatar from './ChooseAvatar.vue'
 
 let playerName = ref('');
-let gamePiece = ref('');
+let gamePiece = ref( );
 let avatar = ref('');
 
 
-const handlePiece = (piece: string) => {
+const handlePiece = (piece: number) => {
     gamePiece.value = piece;
    
 }

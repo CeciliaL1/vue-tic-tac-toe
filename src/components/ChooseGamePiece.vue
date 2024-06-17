@@ -3,11 +3,11 @@ import { ref } from 'vue'
 
 
 interface IGamePieces {
-    chosenPiece: string
+    chosenPiece: number
 }
 const gamePieces = ref<IGamePieces[]>([]);
 
-const handleClick = (piece: string) => {
+const handleClick = (piece: number) => {
     emit('gamePiece', piece)
     gamePieces.value.push({chosenPiece: piece});
     console.log(gamePieces)
@@ -15,7 +15,7 @@ const handleClick = (piece: string) => {
 };
 
 const emit = defineEmits<{
-    (e: 'gamePiece', piece: string):void;
+    (e: 'gamePiece', piece: number):void;
 }>();
 
 </script>
@@ -24,8 +24,8 @@ const emit = defineEmits<{
     <div class="game-piece-container">
         <h4>Choose game piece</h4>
         <div class="game-piece-options">
-            <div class="game-piece" :class="gamePieces.find((piece) => piece.chosenPiece === 'X') ? 'picked-piece': ''" @click="handleClick('X')"><i class="fa-solid fa-x"></i></div>
-            <div class="game-piece" :class="gamePieces.find((piece) => piece.chosenPiece === 'O') ? 'picked-piece': ''" @click="handleClick('O')"><i class="fa-solid fa-o"></i></div>
+            <div class="game-piece" :class="gamePieces.find((piece) => piece.chosenPiece === 1) ? 'picked-piece': ''" @click="handleClick(1)"><i class="fa-solid fa-x"></i></div>
+            <div class="game-piece" :class="gamePieces.find((piece) => piece.chosenPiece === 2) ? 'picked-piece': ''" @click="handleClick(2)"><i class="fa-solid fa-o"></i></div>
         </div>
     </div>
 </template>

@@ -1,6 +1,6 @@
 export interface IPlayer {
     name: string;
-    gamePiece: string;
+    gamePiece: number;
     avatar: string;
     score: number;
     count: number;

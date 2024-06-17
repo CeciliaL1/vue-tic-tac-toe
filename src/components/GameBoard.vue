@@ -1,45 +1,105 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import type { IPlayer } from '../models/Player'
 
 const storedPlayers= ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
-const storedGameBoard = JSON.parse(localStorage.getItem('gameBoard') || '');
+const storedGameBoard = ref(JSON.parse(localStorage.getItem('gameBoard') || ''));
 
+const winningOptions = ref([
+        [[0, 0], [0, 1], [0, 2]],
+        [[1, 0], [1, 1], [1, 2]],
+        [[2, 0], [2, 1], [2, 2]],
 
+        [[0, 0], [1, 0], [2, 0]],
+        [[0, 1], [1, 1], [2, 1]],
+        [[0, 2], [1, 2], [2, 2]],
 
-const handleClick = (i:number) => {
-    
+        [[0, 0], [1, 1], [2, 2]],
+        [[0, 2], [1, 1], [2, 0]]
+]);
+let didSomeOneWin = ref(false);
+let winner = ref<IPlayer[]>();
+
+const emit = defineEmits<{
+    (e: 'checkValues', didSomeOneWin: boolean, winnerValue:IPlayer[] | undefined):void
+}>();
+
+const handleClick = (i:number, j:number) => {
+
+    if( storedGameBoard.value[i][j] === 0 ) {
     if(storedPlayers.value[0].count === storedPlayers.value[1].count){
         storedPlayers.value[0].count ++;
-        storedGameBoard[i] = storedPlayers.value[0].gamePiece;
-        
+        storedGameBoard.value[i][j] = storedPlayers.value[0].gamePiece;
+
+        const checkedWinner = checkWinner();
+        if(checkedWinner){
+            didSomeOneWin.value = true
+            winner.value = [storedPlayers.value[0]]
+            storedPlayers.value[0].score ++; 
+        }
     } else {
         storedPlayers.value[1].count ++;
-        storedGameBoard[i] = storedPlayers.value[1].gamePiece;
+        storedGameBoard.value[i][j] = storedPlayers.value[1].gamePiece;
+
+        const checkedWinner = checkWinner();
+        if(checkedWinner){
+            didSomeOneWin.value = true;
+            winner.value = [storedPlayers.value[1]]
+            storedPlayers.value[1].score ++; 
+        }
+  
+    }
+    localStorage.setItem('winner', JSON.stringify(winner.value));
+    localStorage.setItem('players', JSON.stringify(storedPlayers.value));
+    localStorage.setItem('gameBoard', JSON.stringify(storedGameBoard.value));
+    emit('checkValues', didSomeOneWin.value, winner.value)
+    }else {
+        return;
     }
 
- 
-    localStorage.setItem('players', JSON.stringify(storedPlayers.value));
-    localStorage.setItem('gameBoard', JSON.stringify(storedGameBoard));
 }
 
+const checkWinner = () => {
+    for (const combination of winningOptions.value) {
+        const [a, b, c] = combination;
+        if (
+          storedGameBoard.value[a[0]][a[1]] &&
+          storedGameBoard.value[a[0]][a[1]] === storedGameBoard.value[b[0]][b[1]] &&
+          storedGameBoard.value[a[0]][a[1]] === storedGameBoard.value[c[0]][c[1]]
+        ) {
+          return true;
+        }
+      }
+      return false;
+}
 </script>
 
 <template>
-    <div class="players-presentation">
-    <div v-for="player in storedPlayers">
-        <p>{{ player.name }} {{ player.gamePiece }}</p>
+<div class="players-presentation">
+    <div v-for="(player,i) in storedPlayers">
+        <p>{{ player.name }}   <span v-if=" player.gamePiece === 1 "> X</span><span v-if=" player.gamePiece === 2 "> O</span></p>
+       
+        <p> Points {{ storedPlayers[i].score}}</p>
         <img :src="player.avatar" alt="">
     </div>
 </div>
-    <p v-if="storedPlayers[0].count === storedPlayers[1].count">Players turn {{ storedPlayers[0].name }} {{ storedPlayers[0].gamePiece }}</p>
-    <p v-if="storedPlayers[0].count > storedPlayers[1].count">Players turn {{ storedPlayers[1].name }} {{ storedPlayers[1].gamePiece }}</p>
-<div class="game-board"> 
-<div class="square"  v-for="(square , i) in storedGameBoard" :key="i"  @click="handleClick(i)" >
-    <p v-if="storedGameBoard[i] === 'X'">X</p>
-    <p v-if="storedGameBoard[i] === 'O'">O</p>
+
+<div v-if="!didSomeOneWin" >
+    <p v-if="storedPlayers[0].count === storedPlayers[1].count">Players turn {{ storedPlayers[0].name }}</p>
+    <p v-if="storedPlayers[0].count > storedPlayers[1].count">Players turn {{ storedPlayers[1].name }} </p>
+ 
+<div class="game-board" v-for="(square, i) in storedGameBoard" >
+<div class="square" v-for="(sq , j) in square" :key="j" @click="handleClick(i, j)">
+    <p v-if="storedGameBoard[i][j] === 1">X</p>
+    <p v-if="storedGameBoard[i][j] === 2">O</p>
+</div>
+
 </div>
 </div>
+
+
+
+
 
 
 </template>
@@ -72,7 +132,7 @@ const handleClick = (i:number) => {
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-    height: 70px;
+    height: 100px;
     background-color: var(--color-darker-green);
     margin-top: 50px;
     border-radius: 10px;
