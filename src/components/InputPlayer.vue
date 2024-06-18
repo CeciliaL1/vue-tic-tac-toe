@@ -5,6 +5,11 @@ import ButtonCompenent from './ButtonComponent.vue'
 import ChooseGamePiece from './ChooseGamePiece.vue'
 import ChooseAvatar from './ChooseAvatar.vue'
 
+interface IStoredPlayers {
+    storedPlayer: IPlayer[]
+};
+const props = defineProps<IStoredPlayers>();
+
 let playerName = ref('');
 let gamePiece = ref(0);
 let avatar = ref('');
@@ -42,7 +47,8 @@ const emit = defineEmits<{
 <template>
     <form @submit.prevent="handleSubmit">
         <div class="form-left">
-            <h4>Players name</h4>
+            <h4 v-if="storedPlayer.length === 0">Players 1 name</h4>
+            <h4 v-else>Player 2 name</h4>
             <input type="text" v-model="playerName">
             <ChooseGamePiece @game-piece="handlePiece"/>
         </div>

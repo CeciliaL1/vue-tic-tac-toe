@@ -3,13 +3,12 @@ import {toRaw, ref} from 'vue'
 import { IPlayer } from '../models/Player'
 import ButtonComponent  from './ButtonComponent.vue'
 
-const storedPlayers = ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
-
-interface IWinnerProps {
+interface IStoredData {
     winner: IPlayer[] | undefined;
-}
+    storedPlayers: IPlayer[]
+};
 
-const props = defineProps<IWinnerProps>();
+const props = defineProps<IStoredData>();
 const emits = defineEmits<{
     (e: 'playAgain', value:string):void;
     (e:'newGame', value:string): void;

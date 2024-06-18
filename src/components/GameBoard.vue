@@ -2,8 +2,13 @@
 import { ref, toRaw } from 'vue';
 import type { IPlayer } from '../models/Player'
 
-const storedPlayers= ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
-const storedGameBoard = ref(JSON.parse(localStorage.getItem('gameBoard') || ''));
+interface IStoredData {
+    storedPlayers: IPlayer[];
+    storedGameBoard: number[][];
+}
+
+const props = defineProps<IStoredData>();
+
 
 const winningOptions = ref([
         [[0, 0], [0, 1], [0, 2]],
@@ -26,24 +31,24 @@ const emit = defineEmits<{
 }>();
 
 const handleClick = (i:number, j:number) => {
-    console.log('0', storedPlayers.value[0])
-    console.log('1', storedPlayers.value[1])
-    if(storedGameBoard.value[i][j] === 0 ) {
+    console.log('0', props.storedPlayers[0])
+    console.log('1', props.storedPlayers[1])
+    if(props.storedGameBoard[i][j] === 0 ) {
         
-    if(storedPlayers.value[0].count === storedPlayers.value[1].count){
-        storedPlayers.value[0].count ++;
-        storedGameBoard.value[i][j] = storedPlayers.value[0].gamePiece;
-        checkBoardResult(storedPlayers.value[0]);
+    if(props.storedPlayers[0].count === props.storedPlayers[1].count){
+        props.storedPlayers[0].count ++;
+        props.storedGameBoard[i][j] = props.storedPlayers[0].gamePiece;
+        checkBoardResult(props.storedPlayers[0]);
 
     } else {
-        storedPlayers.value[1].count ++;
-        storedGameBoard.value[i][j] = storedPlayers.value[1].gamePiece;
-        checkBoardResult(storedPlayers.value[1]);
+        props.storedPlayers[1].count ++;
+        props.storedGameBoard[i][j] = props.storedPlayers[1].gamePiece;
+        checkBoardResult(props.storedPlayers[1]);
 
     }
     localStorage.setItem('winner', JSON.stringify(winner.value));
-    localStorage.setItem('players', JSON.stringify(storedPlayers.value));
-    localStorage.setItem('gameBoard', JSON.stringify(storedGameBoard.value));
+    localStorage.setItem('players', JSON.stringify(props.storedPlayers));
+    localStorage.setItem('gameBoard', JSON.stringify(props.storedGameBoard));
     emit('checkValues', didSomeOneWin.value, winner.value);
     
     }else {
@@ -54,7 +59,7 @@ const handleClick = (i:number, j:number) => {
 
 const checkBoardResult = (player:IPlayer) => {
     const checkedWinner = checkWinner();
-    const array = toRaw(storedGameBoard.value)
+    const array = toRaw(props.storedGameBoard)
 
     if(checkedWinner){
         didSomeOneWin.value = true;
@@ -70,9 +75,9 @@ const checkWinner = () => {
     for (const combination of winningOptions.value) {
         const [a, b, c] = combination;
 
-        if (storedGameBoard.value[a[0]][a[1]] &&
-            storedGameBoard.value[a[0]][a[1]] === storedGameBoard.value[b[0]][b[1]] &&
-            storedGameBoard.value[a[0]][a[1]] === storedGameBoard.value[c[0]][c[1]]
+        if (props.storedGameBoard[a[0]][a[1]] &&
+            props.storedGameBoard[a[0]][a[1]] === props.storedGameBoard[b[0]][b[1]] &&
+            props.storedGameBoard[a[0]][a[1]] === props.storedGameBoard[c[0]][c[1]]
         ) {
             return true;
         }

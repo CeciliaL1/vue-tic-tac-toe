@@ -7,9 +7,11 @@ import DisplayWinner from './DisplayWinner.vue'
 
 let players: IPlayer[] = [];
 let enableGame = ref('enableGame');
-let winner = ref<IPlayer[]>()
+let winner = ref<IPlayer[]>();
 
-const storedPlayers = ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
+let storedPlayers = ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '[]'));
+let storedGameBoard = ref<[][]>(JSON.parse(localStorage.getItem('gameBoard') || '[]'));
+
 const gameBoard = [
     [0,0,0],
     [0,0,0],
@@ -47,8 +49,10 @@ const startGame = (player: IPlayer) => {
     players.push(player)
     localStorage.setItem('players', JSON.stringify(players));
 
-    const storedPlayers: IPlayer[] = JSON.parse(localStorage.getItem('players') || '{}');
-    if(storedPlayers.length === 2) {
+    storedPlayers.value = JSON.parse(localStorage.getItem('players') || '[]');
+    storedGameBoard.value = JSON.parse(localStorage.getItem('gameBoard') || '[]')
+
+    if(storedPlayers.value.length === 2) {
         setTimeout(() => {
             enableGame.value = ''
         },1000);
@@ -69,24 +73,27 @@ const playAgain = () =>{
     localStorage.removeItem('winner');
     localStorage.setItem('gameBoard', JSON.stringify(gameBoard));
     enableGame.value = '';
+    storedGameBoard.value = JSON.parse(localStorage.getItem('gameBoard') || '[]');
 };
 const newGame = () => {
     localStorage.clear();
     players = [];
     enableGame.value = 'enableGame';
+    storedPlayers.value = [];
+    storedGameBoard.value = [];
 }
 </script>
 
 <template>
 <div v-if="enableGame === 'isAWinner'">
-    <DisplayWinner :winner="winner" @play-again="playAgain" @new-game="newGame"/>
+    <DisplayWinner :storedPlayers="storedPlayers" :winner="winner" @play-again="playAgain" @new-game="newGame"/>
 </div>
 
 <div class="content" v-if="enableGame === 'enableGame'">
-    <InputPlayer  @start-game="startGame" :player="storedPlayers"/> 
+    <InputPlayer  @start-game="startGame" :storedPlayer="storedPlayers"/> 
 </div>
 <div class="content"  v-if="enableGame === '' ">
-    <GameBoard @check-values="checkValues"/>
+    <GameBoard :storedGameBoard="storedGameBoard" :storedPlayers="storedPlayers" @check-values="checkValues"/>
 </div>
 </template>
 
