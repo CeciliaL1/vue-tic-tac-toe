@@ -2,7 +2,7 @@
 import GameBoard from '../components/GameBoard.vue'
 import InputPlayer from './InputPlayer.vue'
 import type { IPlayer } from '../models/Player'
-import {  ref, toRaw } from 'vue'
+import {  onMounted, ref, toRaw } from 'vue'
 import DisplayWinner from './DisplayWinner.vue'
 
 let players: IPlayer[] = [];
@@ -16,19 +16,18 @@ const gameBoard = [
     [0,0,0]
 ];
 
-const init =() => {
+onMounted(()=> {
     const storedWinner = ref<IPlayer[]>(getStoredWinner())
-        console.log(storedWinner.value)
-        if(storedPlayers.value.length === 2) {
-            enableGame.value = '';
-        }
+
+    if(storedPlayers.value.length === 2) {
+        enableGame.value = '';
+    }
     
         if(storedWinner.value.length === 1) {
             enableGame.value = 'isAWinner'
             winner.value = toRaw(storedWinner.value)
         }
-};
-
+});
 const getStoredWinner = () => {
     const storedData = localStorage.getItem('winner');
     if(!storedData) {
@@ -56,7 +55,7 @@ const startGame = (player: IPlayer) => {
     };
 };
 
-init();
+
 
 const checkValues = (didSomeOneWin: boolean, winnerValue: IPlayer[]| undefined) => {
     if(didSomeOneWin) {
