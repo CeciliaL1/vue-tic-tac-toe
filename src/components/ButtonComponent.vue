@@ -3,22 +3,20 @@ import {ref} from 'vue'
 
 interface IButtonProps {
     buttonText: string;
-    buttonEvent: string;
+   
 }
 
 const props = defineProps<IButtonProps>();
 
-const click = ref<IButtonProps>(props);
-
 const emit = defineEmits<{
-    (e: 'handleClick', value:string):void
+    (e: 'handleClick'):void
 }>();
 
 </script>
 
 
 <template>
-<button @click="$emit('handleClick', click.buttonEvent) ">{{ buttonText }}</button>
+<button @click="$emit('handleClick') ">{{ buttonText }}</button>
 </template>
 
 <style scoped>

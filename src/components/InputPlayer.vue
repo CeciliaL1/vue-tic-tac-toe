@@ -8,6 +8,7 @@ import ChooseAvatar from './ChooseAvatar.vue'
 interface IStoredPlayers {
     storedPlayer: IPlayer[]
 };
+
 const props = defineProps<IStoredPlayers>();
 
 let gamePieces = ref<number[]>([]);
@@ -58,7 +59,7 @@ const emit = defineEmits<{
         <ChooseAvatar @chose-avatar="handleAvatar" />
        </div>
         
-        <ButtonCompenent  :buttonText="storedPlayer.length === 0 ? 'Create Player 1' : 'Start game'" buttonEvent="startGame"/>
+        <ButtonCompenent  :buttonText="storedPlayer.length === 0 ? 'Create Player 1' : 'Start game'"/>
       
     </form>
 </template>

@@ -6,11 +6,9 @@ import {  onMounted, ref, toRaw } from 'vue'
 import DisplayWinner from './DisplayWinner.vue'
 
 
-//localStorage.clear()
 let players: IPlayer[] = [];
 let enableGame = ref('enableGame');
 let winner = ref<IPlayer[]>();
-
 let storedPlayers = ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '[]'));
 let storedGameBoard = ref<[][]>(JSON.parse(localStorage.getItem('gameBoard') || '[]'));
 
@@ -22,7 +20,6 @@ const gameBoard = [
 
 onMounted(()=> {
     const storedWinner = ref<IPlayer[]>(getStoredWinner())
-
     if(storedPlayers.value.length === 2) {
         enableGame.value = '';
     }
@@ -32,6 +29,7 @@ onMounted(()=> {
             winner.value = toRaw(storedWinner.value)
         }
 });
+
 const getStoredWinner = () => {
     const storedData = localStorage.getItem('winner');
     if(!storedData) {
@@ -77,6 +75,7 @@ const playAgain = () =>{
     enableGame.value = '';
     storedGameBoard.value = JSON.parse(localStorage.getItem('gameBoard') || '[]');
 };
+
 const newGame = () => {
     localStorage.clear();
     players = [];
