@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { IPlayer } from '../models/Player'
 
-interface IGamePiecesProps {
+interface IGameDataProps {
     gamePieces: number[];
     storedPlayers: IPlayer[]
 };
 
-const props = defineProps<IGamePiecesProps>();
+const props = defineProps<IGameDataProps>();
 
 const handleClick = (piece: number) => {
     if(props.gamePieces.length === 1){
         return;
     }
-
     emit('gamePiece', piece);
     props.gamePieces.push(piece);
 };
@@ -20,6 +19,12 @@ const handleClick = (piece: number) => {
 const emit = defineEmits<{
     (e: 'gamePiece', piece: number):void;
 }>();
+
+/**
+ *  Functions that check picked piece on player in storage and return class-name on click - startgame-btn
+ * when player is added to localstorage
+ * @param piece - Number that indicates picked piece 1 = X and 2 = O
+ */
 
 const checkStoredPiece = (piece: number):string => {
     const storedPiece = props.storedPlayers.find((player) => player.gamePiece === piece);
@@ -30,6 +35,11 @@ const checkStoredPiece = (piece: number):string => {
         return ' ';
     }
 }
+/**
+ *  Functions that check picked piece in game-piece array and add class-name on click piece-btn
+ * @param piece - Number that indicates picked piece 1 = X and 2 = O
+ */
+
 const checkPickedPiece = (piece: number) => {
     const pickedPiece = props.gamePieces.find((pi) => pi === piece);
     if(pickedPiece) {
