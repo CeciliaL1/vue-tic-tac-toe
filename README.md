@@ -9,9 +9,9 @@
 
 A Tic Tac Toe game using vue.js and TypeScript
 
-- Use atLeat three components for tour solution
+- Use atleast three components for tour solution
 - Save point history for players.
-- Be able to display point statistics.
+- Be able to display score statistics.
 - Allow users to close the browser and resume where the game was interrupted.
 - Provide the ability to reset statistics and start over with new players.
 
