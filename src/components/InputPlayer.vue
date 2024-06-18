@@ -50,7 +50,7 @@ const emit = defineEmits<{
 <template>
     <form @submit.prevent="handleSubmit">
         <div class="form-left">
-            <h4 v-if="storedPlayer.length === 0">Players 1 name</h4>
+            <h4 v-if="storedPlayer.length === 0">Player 1 name</h4>
             <h4 v-else>Player 2 name</h4>
             <input type="text" v-model="playerName">
             <ChooseGamePiece :storedPlayers="storedPlayer" :gamePieces="gamePieces" @game-piece="handlePiece"/>
