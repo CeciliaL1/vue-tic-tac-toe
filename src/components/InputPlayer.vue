@@ -10,6 +10,7 @@ interface IStoredPlayers {
 };
 const props = defineProps<IStoredPlayers>();
 
+let gamePieces = ref<number[]>([]);
 let playerName = ref('');
 let gamePiece = ref(0);
 let avatar = ref('');
@@ -36,6 +37,7 @@ const handleSubmit = () => {
     };
     emit('startGame', player);
     playerName.value = '';
+    gamePieces.value = [];
 };
 
 const emit = defineEmits<{
@@ -50,7 +52,7 @@ const emit = defineEmits<{
             <h4 v-if="storedPlayer.length === 0">Players 1 name</h4>
             <h4 v-else>Player 2 name</h4>
             <input type="text" v-model="playerName">
-            <ChooseGamePiece @game-piece="handlePiece"/>
+            <ChooseGamePiece :storedPlayers="storedPlayer" :gamePieces="gamePieces" @game-piece="handlePiece"/>
         </div>
        <div class="form-right">
         <ChooseAvatar @chose-avatar="handleAvatar" />

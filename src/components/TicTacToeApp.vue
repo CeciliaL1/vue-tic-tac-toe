@@ -5,6 +5,8 @@ import type { IPlayer } from '../models/Player'
 import {  onMounted, ref, toRaw } from 'vue'
 import DisplayWinner from './DisplayWinner.vue'
 
+
+//localStorage.clear()
 let players: IPlayer[] = [];
 let enableGame = ref('enableGame');
 let winner = ref<IPlayer[]>();
