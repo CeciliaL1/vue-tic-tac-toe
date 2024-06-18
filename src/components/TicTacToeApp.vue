@@ -80,7 +80,7 @@ const newGame = () => {
 
 <template>
 <div v-if="enableGame === 'isAWinner'">
-    <DisplayWinner :player="winner" @play-again="playAgain" @new-game="newGame"/>
+    <DisplayWinner :winner="winner" @play-again="playAgain" @new-game="newGame"/>
 </div>
 
 <div class="content" v-if="enableGame === 'enableGame'">

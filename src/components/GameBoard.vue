@@ -63,7 +63,7 @@ const checkBoardResult = (player:IPlayer) => {
 
     } else if (!checkedWinner && !array[0].includes(0) && !array[1].includes(0) && !array[2].includes(0)) {
         didSomeOneWin.value = true;
-        winner.value = [{name:'Tied game', gamePiece: 0, avatar: 'src/assets/Avatars/tie-svgrepo-com.svg', count:0, score:0}];
+        winner.value = [{name:'Tied game', gamePiece: 0, avatar: '/tie-svgrepo-com.svg', count:0, score:0}];
     }
 };
 const checkWinner = () => {

@@ -4,8 +4,9 @@ import { IPlayer } from '../models/Player'
 import ButtonComponent  from './ButtonComponent.vue'
 
 const storedPlayers = ref<IPlayer[]>(JSON.parse(localStorage.getItem('players') || '{}'));
+
 interface IWinnerProps {
-    player: IPlayer[] | undefined;
+    winner: IPlayer[] | undefined;
 }
 
 const props = defineProps<IWinnerProps>();
@@ -14,7 +15,7 @@ const emits = defineEmits<{
     (e:'newGame', value:string): void;
 }>()
 
-const winner = toRaw(props.player);
+const winner = toRaw(props.winner);
 
 </script>
 
