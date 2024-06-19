@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { IPlayer } from '../models/Player';
 
-interface IGameBoard {
+interface IStoredData {
     storedGameBoard: number[][];
     winner: IPlayer[] | undefined;
 }
 
-const props = defineProps<IGameBoard>();
+const props = defineProps<IStoredData>();
 
 const handleClick = (i:number, j:number) => {
     emit('handleClick', i, j)
