@@ -63,9 +63,12 @@ const startGame = (player: IPlayer) => {
 
 const checkValues = (didSomeOneWin: boolean, winnerValue: IPlayer[]| undefined) => {
     if(didSomeOneWin) {
-        enableGame.value = 'isAWinner';
-        winner.value = winnerValue;
-        localStorage.removeItem('gameBoard');
+        setTimeout(() => {
+            enableGame.value = 'isAWinner';
+        }, 1000);
+         
+            winner.value = winnerValue;
+            
     };
 };
 
@@ -87,13 +90,13 @@ const newGame = () => {
 
 <template>
 <div v-if="enableGame === 'isAWinner'">
-    <DisplayWinner :storedPlayers="storedPlayers" :winner="winner" @play-again="playAgain" @new-game="newGame"/>
+    <DisplayWinner :storedGameBoard="storedGameBoard" :storedPlayers="storedPlayers" :winner="winner" @play-again="playAgain" @new-game="newGame"/>
 </div>
 
 <div class="content" v-if="enableGame === 'enableGame'">
     <InputPlayer  @start-game="startGame" :storedPlayers="storedPlayers"/> 
 </div>
-<div class="content"  v-if="enableGame === '' ">
+<div class="content"  v-if="enableGame === ''">
     <GameBoard :storedGameBoard="storedGameBoard" :storedPlayers="storedPlayers" @check-values="checkValues"/>
 </div>
 </template>
@@ -101,6 +104,6 @@ const newGame = () => {
 <style scoped>
 .content {
     position: absolute;
-    top: 150px;
+    top: 100px;
 }
 </style>

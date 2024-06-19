@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, toRaw } from 'vue';
 import type { IPlayer } from '../models/Player'
+import PlayBoard from './PlayBoard.vue'
 
 interface IStoredData {
     storedPlayers: IPlayer[];
@@ -31,8 +32,7 @@ const emit = defineEmits<{
 }>();
 
 const handleClick = (i:number, j:number) => {
-    console.log('0', props.storedPlayers[0])
-    console.log('1', props.storedPlayers[1])
+    
     if(props.storedGameBoard[i][j] === 0 ) {
         
     if(props.storedPlayers[0].count === props.storedPlayers[1].count){
@@ -88,52 +88,28 @@ const checkWinner = () => {
 </script>
 
 <template>
+    <div class="player-turn" v-if="!didSomeOneWin" >
+    <p v-if="storedPlayers[0].count === storedPlayers[1].count">Players turn {{ storedPlayers[0].name }}<span v-if=" storedPlayers[0].gamePiece === 1">X</span><span v-if=" storedPlayers[0].gamePiece === 2 "> O</span></p>
+    <p v-if="storedPlayers[0].count > storedPlayers[1].count">Players turn {{ storedPlayers[1].name }} <span v-if=" storedPlayers[1].gamePiece === 1">X</span><span v-if=" storedPlayers[1].gamePiece === 2 "> O</span></p>
+ 
+</div>
+
 <div class="players-presentation">
     <div v-for="(player,i) in storedPlayers">
-        <p>{{ player.name }}   <span v-if=" player.gamePiece === 1 "> X</span><span v-if=" player.gamePiece === 2 "> O</span></p>
+        <p>{{ player.name }}   <span v-if=" player.gamePiece === 1">X</span><span v-if=" player.gamePiece === 2 "> O</span></p>
        
         <p> Points {{ storedPlayers[i].score}}</p>
         <img :src="player.avatar" alt="">
     </div>
 </div>
 
-<div v-if="!didSomeOneWin" >
-    <p v-if="storedPlayers[0].count === storedPlayers[1].count">Players turn {{ storedPlayers[0].name }}</p>
-    <p v-if="storedPlayers[0].count > storedPlayers[1].count">Players turn {{ storedPlayers[1].name }} </p>
- 
-<div class="game-board" v-for="(square, i) in storedGameBoard" >
-<div class="square" v-for="(sq , j) in square" :key="j" @click="handleClick(i, j)">
-    <p class="game-piece" v-if="storedGameBoard[i][j] === 1">X</p>
-    <p class="game-piece" v-if="storedGameBoard[i][j] === 2">O</p>
-</div>
 
-</div>
-</div>
+
+<PlayBoard :storedGameBoard="storedGameBoard" @handle-click="handleClick" />
 </template>
 
 <style scoped>
-.game-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border: 1px solid black;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-   
-}
-.square {
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
-    cursor: pointer;
-    background-color: #f8f8f8
-}
-.square .clicked {
-    background-color: aqua;
-}
-.square:hover {
-    background-color: var(--color-yellow);
-    opacity: 70%;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
+
 .players-presentation {
     display: flex;
     flex-direction: row;
@@ -141,7 +117,7 @@ const checkWinner = () => {
     width: 100%;
     height: 100px;
     background-color: var(--color-darker-green);
-    margin-top: 50px;
+    margin-top: 30px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -153,10 +129,16 @@ const checkWinner = () => {
     width: 40px;
     height: auto;
 }
-.game-piece{
-    margin-top: 15px;
+.player-turn {
+    text-transform: uppercase;
+    padding: 3px;
     font-family: 'Yatra One';
-    font-size: 3rem;
+    font-weight: 700px;
+    font-size: 1rem;
+    background-color: var(--color-yellow);
+    border-radius: 10px;
+    margin-bottom: 3px
 }
+
 
 </style>
