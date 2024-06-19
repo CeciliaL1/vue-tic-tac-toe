@@ -32,7 +32,8 @@ const emit = defineEmits<{
 }>();
 
 const handleClick = (i:number, j:number) => {
-    
+   
+ 
     if(props.storedGameBoard[i][j] === 0 ) {
         
     if(props.storedPlayers[0].count === props.storedPlayers[1].count){
@@ -56,11 +57,12 @@ const handleClick = (i:number, j:number) => {
     };
    
 };
-
-const checkBoardResult = (player:IPlayer) => {
+const checkBoardResult = (player:IPlayer,):void => {
+    
     const checkedWinner = checkWinner();
     const array = toRaw(props.storedGameBoard)
 
+  
     if(checkedWinner){
         didSomeOneWin.value = true;
         winner.value = [player];
@@ -108,7 +110,7 @@ const checkWinner = () => {
         </div>
     </div>
 
-    <PlayBoard :storedGameBoard="storedGameBoard" @handle-click="handleClick" />
+    <PlayBoard :winner="winner" :storedGameBoard="storedGameBoard" @handle-click="handleClick" />
 </template>
 
 <style scoped>
