@@ -6,7 +6,7 @@ import ChooseGamePiece from './ChooseGamePiece.vue'
 import ChooseAvatar from './ChooseAvatar.vue'
 
 interface IStoredPlayers {
-    storedPlayer: IPlayer[]
+    storedPlayers: IPlayer[]
 };
 
 const props = defineProps<IStoredPlayers>();
@@ -50,16 +50,23 @@ const emit = defineEmits<{
 <template>
     <form @submit.prevent="handleSubmit">
         <div class="form-left">
-            <h4 v-if="storedPlayer.length === 0">Player 1 name</h4>
+            <h4 v-if="storedPlayers.length === 0">Player 1 name</h4>
             <h4 v-else>Player 2 name</h4>
             <input type="text" v-model="playerName">
-            <ChooseGamePiece :storedPlayers="storedPlayer" :gamePieces="gamePieces" @game-piece="handlePiece"/>
+            <ChooseGamePiece :storedPlayers="storedPlayers" :gamePieces="gamePieces" @game-piece="handlePiece"/>
         </div>
        <div class="form-right">
         <ChooseAvatar @chose-avatar="handleAvatar" />
        </div>
-        
-        <ButtonCompenent  :buttonText="storedPlayer.length === 0 ? 'Create Player 1' : 'Start game'"/>
+
+       <div class="players-presentation">
+        <div class="player-info" v-for="player in storedPlayers">
+            <p> {{ player.name }}</p>
+            <p>{{  player.gamePiece }}p</p>
+            <img :src="player.avatar" alt="">
+        </div>
+    </div>
+        <ButtonCompenent  :buttonText="storedPlayers.length === 0 ? 'Create Player 1' : 'Start game'"/>
       
     </form>
 </template>
@@ -93,6 +100,26 @@ form input:hover {
     background-color: var(--color-ligher-green);
     opacity: 70%;
 }
-
-
+div .players-presentation {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+}
+div .players-presentation img {
+    height: 60px;
+    width: 60px;
+    margin-top: 25px;
+}
+div .player-info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.player-info p {
+    font-family: Raleway;
+    font-weight: 600;
+    margin-top: 50px;
+}
 </style>

@@ -91,7 +91,7 @@ const newGame = () => {
 </div>
 
 <div class="content" v-if="enableGame === 'enableGame'">
-    <InputPlayer  @start-game="startGame" :storedPlayer="storedPlayers"/> 
+    <InputPlayer  @start-game="startGame" :storedPlayers="storedPlayers"/> 
 </div>
 <div class="content"  v-if="enableGame === '' ">
     <GameBoard :storedGameBoard="storedGameBoard" :storedPlayers="storedPlayers" @check-values="checkValues"/>
