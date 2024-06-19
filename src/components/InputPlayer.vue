@@ -55,19 +55,19 @@ const emit = defineEmits<{
             <input type="text" v-model="playerName">
             <ChooseGamePiece :storedPlayers="storedPlayers" :gamePieces="gamePieces" @game-piece="handlePiece"/>
         </div>
+
        <div class="form-right">
-        <ChooseAvatar @chose-avatar="handleAvatar" />
+            <ChooseAvatar @chose-avatar="handleAvatar" />
        </div>
 
        <div class="players-presentation">
-        <div class="player-info" v-for="player in storedPlayers">
-            <p> {{ player.name }}</p>
-            <p>{{  player.gamePiece }}p</p>
-            <img :src="player.avatar" alt="">
+            <div class="player-info" v-for="player in storedPlayers">
+                <p> {{ player.name }}</p>
+                <p><span v-if=" player.gamePiece === 1">X</span><span v-if=" player.gamePiece === 2 "> O</span></p>
+                <img :src="player.avatar" alt="">
+            </div>
         </div>
-    </div>
         <ButtonCompenent  :buttonText="storedPlayers.length === 0 ? 'Create Player 1' : 'Start game'"/>
-      
     </form>
 </template>
 

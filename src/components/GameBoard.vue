@@ -89,23 +89,26 @@ const checkWinner = () => {
 
 <template>
     <div class="player-turn" v-if="!didSomeOneWin" >
-    <p v-if="storedPlayers[0].count === storedPlayers[1].count">Players turn {{ storedPlayers[0].name }}<span v-if=" storedPlayers[0].gamePiece === 1">X</span><span v-if=" storedPlayers[0].gamePiece === 2 "> O</span></p>
-    <p v-if="storedPlayers[0].count > storedPlayers[1].count">Players turn {{ storedPlayers[1].name }} <span v-if=" storedPlayers[1].gamePiece === 1">X</span><span v-if=" storedPlayers[1].gamePiece === 2 "> O</span></p>
- 
-</div>
-
-<div class="players-presentation">
-    <div v-for="(player,i) in storedPlayers">
-        <p>{{ player.name }}   <span v-if=" player.gamePiece === 1">X</span><span v-if=" player.gamePiece === 2 "> O</span></p>
-       
-        <p> Points {{ storedPlayers[i].score}}</p>
-        <img :src="player.avatar" alt="">
+        <p v-if="storedPlayers[0].count === storedPlayers[1].count">Players turn {{ storedPlayers[0].name }} 
+            <span v-if=" storedPlayers[0].gamePiece === 1">X</span><span v-if=" storedPlayers[0].gamePiece === 2 "> O</span>
+        </p>
+        <p v-if="storedPlayers[0].count > storedPlayers[1].count">Players turn {{ storedPlayers[1].name }} 
+            <span v-if=" storedPlayers[1].gamePiece === 1">X</span><span v-if=" storedPlayers[1].gamePiece === 2 "> O</span>
+        </p>
     </div>
-</div>
 
+    <div class="players-presentation">
+        <div v-for="(player,i) in storedPlayers">
+            <p>{{ player.name }}   
+                <span v-if=" player.gamePiece === 1">X</span>
+                <span v-if=" player.gamePiece === 2 "> O</span>
+            </p>
+            <p> Points {{ storedPlayers[i].score}}</p>
+            <img :src="player.avatar" alt="">
+        </div>
+    </div>
 
-
-<PlayBoard :storedGameBoard="storedGameBoard" @handle-click="handleClick" />
+    <PlayBoard :storedGameBoard="storedGameBoard" @handle-click="handleClick" />
 </template>
 
 <style scoped>

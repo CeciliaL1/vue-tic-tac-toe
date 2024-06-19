@@ -12,14 +12,14 @@ const emit = defineEmits<{
 
 <template>
     
-<div class="container">
-<div class="game-board" v-for="(square, i) in storedGameBoard" >
-<div class="square" v-for="(sq , j) in square" :key="j" @click="$emit('handleClick', i, j)">
-    <p class="game-piece" :class="storedGameBoard[i][j] === 1 ? 'piece-X-color' : ''" v-if="storedGameBoard[i][j] === 1">X</p>
-    <p class="game-piece" :class="storedGameBoard[i][j] === 2 ? 'piece-O-color' : ''" v-if="storedGameBoard[i][j] === 2">O</p>
-</div>
-</div>
-</div>
+    <div class="container">
+        <div class="game-board" v-for="(square, i) in storedGameBoard" >
+            <div class="square" v-for="(sq , j) in square" :key="j" @click="$emit('handleClick', i, j)">
+                <p class="game-piece" :class="storedGameBoard[i][j] === 1 ? 'piece-X-color' : ''" v-if="storedGameBoard[i][j] === 1">X</p>
+                <p class="game-piece" :class="storedGameBoard[i][j] === 2 ? 'piece-O-color' : ''" v-if="storedGameBoard[i][j] === 2">O</p>
+            </div>
+        </div>
+    </div>
 
 </template>
 

@@ -14,7 +14,7 @@ const emit = defineEmits<{
 
 
 <template>
-<button @click="$emit('handleClick') ">{{ buttonText }}</button>
+    <button @click="$emit('handleClick') ">{{ buttonText }}</button>
 </template>
 
 <style scoped>

@@ -89,16 +89,16 @@ const newGame = () => {
 </script>
 
 <template>
-<div v-if="enableGame === 'isAWinner'">
-    <DisplayWinner :storedGameBoard="storedGameBoard" :storedPlayers="storedPlayers" :winner="winner" @play-again="playAgain" @new-game="newGame"/>
-</div>
+    <div v-if="enableGame === 'isAWinner'">
+        <DisplayWinner :storedGameBoard="storedGameBoard" :storedPlayers="storedPlayers" :winner="winner" @play-again="playAgain" @new-game="newGame"/>
+    </div>
 
-<div class="content" v-if="enableGame === 'enableGame'">
-    <InputPlayer  @start-game="startGame" :storedPlayers="storedPlayers"/> 
-</div>
-<div class="content"  v-if="enableGame === ''">
-    <GameBoard :storedGameBoard="storedGameBoard" :storedPlayers="storedPlayers" @check-values="checkValues"/>
-</div>
+    <div class="content" v-if="enableGame === 'enableGame'">
+        <InputPlayer  @start-game="startGame" :storedPlayers="storedPlayers"/> 
+    </div>
+    <div class="content"  v-if="enableGame === ''">
+        <GameBoard :storedGameBoard="storedGameBoard" :storedPlayers="storedPlayers" @check-values="checkValues"/>
+    </div>
 </template>
 
 <style scoped>

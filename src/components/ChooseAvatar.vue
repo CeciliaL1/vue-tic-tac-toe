@@ -20,10 +20,9 @@ const emit = defineEmits<{
 
 <template>
     <h4>Choose an avatar</h4>
-<div class="avatar-container" >
-    <img v-for="(animal, i) in avatars" :src="animal" alt="" :key="i" @click="handleClick(animal, $event)">
-  
-</div>
+    <div class="avatar-container" >
+        <img v-for="(animal, i) in avatars" :src="animal" alt="" :key="i" @click="handleClick(animal, $event)">
+    </div>
 </template>
 
 <style scoped>

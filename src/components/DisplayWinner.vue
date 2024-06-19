@@ -22,7 +22,6 @@ console.log(winner)
 
 <template>
 <div>
-
     <div v-for="win in winner">
         <h1 v-if="win.name != 'Tied game'">Winner is {{ win.name }}</h1>
         <h1 v-else>{{ win.name }}</h1>
@@ -43,10 +42,7 @@ console.log(winner)
             <img :src="player.avatar" alt="">
         </div>
     </div>
-
 </div>
-
-
 </template>
 
 <style scoped >
