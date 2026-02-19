@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const avatars:string[] = ['/elephant.svg', '/giraffe.svg', '/gorilla.svg', '/pinguin.svg', '/rhino.svg', '/tiger.svg'];
+const avatars:string[] = ['./elephant.svg', './giraffe.svg', './gorilla.svg', './pinguin.svg', './rhino.svg', './tiger.svg'];
 
 
 const handleClick = (animal:string, e: Event ):void => {
